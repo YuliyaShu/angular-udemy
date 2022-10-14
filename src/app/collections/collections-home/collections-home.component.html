@@ -1,1 +1,29 @@
-<p>collections-home works!</p>
+<app-devider>
+  Table Component
+</app-devider>
+<app-table classNames="striped cell" [data]="data" [headers]="headers"></app-table>
+
+<app-devider>
+  Tab Menu
+</app-devider>
+<app-tabs>
+  <a
+        routerLink="./"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="active item">
+        Biography
+      </a>
+      <a
+        routerLink="companies"
+        routerLinkActive="active"
+        class="item">
+        Companies
+      </a>
+      <a
+        routerLink="partners"
+        routerLinkActive="active"
+        class="item">
+        Partners
+      </a>
+</app-tabs>
