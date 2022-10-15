@@ -1,0 +1,13 @@
+<app-devider>Modal</app-devider>
+<button (click)="onClick()">Show Modal</button>
+<app-modal (close)="onClick()" *ngIf="modalOpen">
+  <div modalTitle>Reusable title</div>
+  <p>
+      Im a reusable
+   </p>
+   <ng-container modalFooter>
+    <div class="ui button" (click)="onClick()">Close me</div>
+   </ng-container>
+</app-modal>
+<app-devider>Accordion</app-devider>
+<app-accordion [items]="items"></app-accordion>
