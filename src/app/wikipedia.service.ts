@@ -1,36 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient  } from '@angular/common/http';
-
-interface SearchInfo {
-  suggestion: string;
-  suggestionsnippet: string;
-  totalhits: number;
-}
+import { map } from 'rxjs';
 
 export interface Item {
   ns: number;
-  pageid: number;
+  pageId: number;
   size: number;
   snippet: string;
   timestamp: string;
   title:string;
-  wordcount: number;
-}
-
-interface Query {
-  search: Item[];
-  searchInfo: SearchInfo;
-}
-
-interface Continue {
-  continue: string;
-  sroffset: number;
+  wordCount: number;
 }
 
 interface Response {
-  batchcomplete: string;
-  continue?: Continue;
-  query: Query;
+  query: {
+    search: Item[];
+  };
 }
 
 @Injectable({
@@ -50,6 +35,8 @@ export class WikipediaService {
         srsearch: term,
         origin: '*',
       }
-    });
+    }).pipe(
+      map(x => x?.query?.search),
+    );
   }
 }
