@@ -1,0 +1,7 @@
+<form [formGroup]="mathForm">
+  <div class="equasion">{{ a }} + {{ b }} =
+    <input
+      appAnswerHighlight
+      formControlName="answer" /></div>
+</form>
+<div class="stats">{{ secondsForSolution | number: '1.1-3'}}</div>
