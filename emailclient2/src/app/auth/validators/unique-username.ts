@@ -1,13 +1,19 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidator } from "@angular/forms";
+import { catchError, map, of } from "rxjs";
+import { AuthService } from "../auth.service";
 
 @Injectable({providedIn: 'root'})
 export class UniqueUsername implements AsyncValidator {
-  constructor (private http: HttpClient) {}
-  validate = async (control: AbstractControl) => {
+  constructor (private authService: AuthService) {}
+  validate(control: AbstractControl) {
     const { value } = control;
-    console.log(this.http);
-    return null;
+    return this.authService.usernameAvailable(value).pipe(
+      map(() => null),
+      catchError((err) => {
+        if (err.status === 422) return of({ nonUniqueUsername: true });
+        return of({ anotherError: true});
+      }))
   }
 }

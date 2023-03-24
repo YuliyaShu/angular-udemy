@@ -9,13 +9,19 @@ import { UniqueUsername } from '../validators/unique-username';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  constructor(
+    private matchPassword: MatchPassword,
+    private uniqueUsername: UniqueUsername) {}
+
   authForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
-      Validators.pattern(/^[a-z0-9]+$/)
-    ], [this.uniqueUsername.validate]),
+    username: new FormControl('', {
+      validators: [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-z0-9]+$/)
+      ],
+      asyncValidators: [this.uniqueUsername.validate.bind(this.uniqueUsername)]}),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
@@ -27,9 +33,7 @@ export class SignupComponent implements OnInit {
       Validators.maxLength(20)
     ])
   }, { validators: [this.matchPassword.validate] })
-  constructor(
-    private matchPassword: MatchPassword,
-    private uniqueUsername: UniqueUsername) {}
+
   ngOnInit(): void {
 
   }
